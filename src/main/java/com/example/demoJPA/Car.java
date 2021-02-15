@@ -8,8 +8,15 @@ public class Car {
     private String brand;
     private int price;
 
-    public Car() {
+    public Car(String p_platenumber,String brand,int price) {
         super();
+        this.plateNumber = p_platenumber;
+        this.brand = brand;
+        this.price = price;
+    }
+
+    public Car() {
+
     }
 
     @Id
