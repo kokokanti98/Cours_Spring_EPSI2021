@@ -1,5 +1,8 @@
 package com.example.demoWebService;
 
+import javax.persistence.Entity;
+
+@Entity
 public class Car {
 
     private String plateNumber;
