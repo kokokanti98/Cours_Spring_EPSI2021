@@ -1,7 +1,8 @@
 package com.example.demoJPA;
 
+import javax.persistence.Entity;
 import javax.persistence.Id;
-
+@Entity
 public class Car {
     private String plateNumber;
     private String brand;
@@ -11,12 +12,6 @@ public class Car {
         super();
     }
 
-    public Car(String plateNumber, String brand, int price) {
-        super();
-        this.plateNumber = plateNumber;
-        this.brand = brand;
-        this.price = price;
-    }
     @Id
     public String getPlateNumber() {
         return plateNumber;
@@ -42,8 +37,4 @@ public class Car {
         this.price = price;
     }
 
-    @Override
-    public String toString() {
-        return "Car [plateNumber=" + plateNumber + ", brand=" + brand + ", price=" + price + "]";
-    }
 }
