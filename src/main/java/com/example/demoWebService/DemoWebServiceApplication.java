@@ -16,12 +16,8 @@ public class DemoWebServiceApplication {
 	ArrayList<Car> cars = new ArrayList<Car>();
 
 	public void MonWebService() {
-		Car car = new Car();
-		car.setPlateNumber("11AA22");
-		cars.add(car);
-		car = new Car();
-		car.setPlateNumber("22BB33");
-		cars.add(car);
+		cars.add(new Car("11AA2C", "Ferrari", 1000));
+		cars.add(new Car("11AAB2", "Fiat", 500));
 	}
 
 	@GetMapping("/cars")
@@ -33,6 +29,11 @@ public class DemoWebServiceApplication {
 	Car getCar(@PathVariable(value = "plaque") String immatriculation) {
 		System.out.println(immatriculation);
 		// parcourir avec une boucle le tableau des voitures à la recherche de la voiture qui a la plaque immatriculation
+		for(Car car: cars){
+			if(car.getPlateNumber().equals(immatriculation)){
+				return car;
+			}
+		}
 		return null;
 	}
 

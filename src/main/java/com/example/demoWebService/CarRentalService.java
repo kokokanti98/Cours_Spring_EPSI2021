@@ -19,7 +19,7 @@ public class CarRentalService {
         cars.add(new Car("33BB44", "Porshe", 2222));
     }
 
-    @GetMapping("/cars")
+   @GetMapping("/cars")
     public List<Car> getListOfCars(){
         return cars;
     }
@@ -30,7 +30,7 @@ public class CarRentalService {
         cars.add(car);
     }
 
-    @GetMapping("/cars/{plateNumber}")
+   @GetMapping("/cars/{plateNumber}")
     public Car getCar(@PathVariable(value = "plateNumber") String plateNumber){
         for(Car car: cars){
             if(car.getPlateNumber().equals(plateNumber)){
