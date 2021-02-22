@@ -62,4 +62,13 @@ public class EssaiController {
         Car voiture_enregistrer = carrepo.save(new Car(p_plateNumber,p_brand,p_price));
         return voiture_enregistrer;
     }
+    //@RequestBody String p_plateNumber
+
+    @PostMapping("/cars")
+    @ResponseBody
+    public  Car Car_Create_or_Saved(@RequestBody String p_plateNumber,
+                                    @RequestBody String p_brand, @RequestBody int p_price) {
+        Car voiture_enregistrer = carrepo.save(new Car(p_plateNumber,p_brand,p_price));
+        return voiture_enregistrer;
+    }
 }
