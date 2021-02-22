@@ -45,11 +45,11 @@ public class EssaiController {
     @ResponseBody
     public Optional<Car> Car_SeeById(@PathVariable(value = "plateNumber") String p_plateNumber) {
         var it = carrepo.findById(p_plateNumber);
-        if(it!=null){
-            System.out.println("La voiture existe et trouvé dans le navigateur web!");
+        if(it == null){
+            System.out.println("La voiture n'existe pas donc la valeur trouvé est null");
         }
         else{
-            System.out.println("La voiture n'existe pas donc la valeur trouvé est null");
+            System.out.println("La voiture existe et trouvé dans le navigateur web!");
         }
         return it;
     }
