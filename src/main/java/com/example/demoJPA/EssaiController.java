@@ -1,5 +1,4 @@
 package com.example.demoJPA;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,22 +24,56 @@ public class EssaiController {
 
         return cars;
     }
-    //Pour supprimer par son numero de serie
-    //n oublier pas de préciser sur Postman que le lien URI ici est en DELETE A12EDRD
-    @DeleteMapping("/voitures/delete/{plateNumber}")
+    //n oublier pas de mettre dans headers dans postman le Content-type et value = application/json
+    // et dans body la valeur de chaque ligne(ligne pour les donnees pour creer la classe car) en json bien sur
+    //{
+    //    "plateNumber" : "A16X22E",
+    //        "brand" : "ferrari",
+    //        "price" : 14000
+    //}
+    //creer une voiture a l aide d un fichier json
+    @PostMapping(value = "/voitures/creer")
     @ResponseBody
-    public String Car_deleteById(@PathVariable(value = "plateNumber") String p_plateNumber) {
-        String success;
+    public  Car Car_CreatOrModify(@RequestBody Car car_created) {
+        Car voiture_enregistrer = carrepo.save(car_created);
         if(carrepo != null){
-            carrepo.deleteById(p_plateNumber);
-            success = "Voiture supprimer avec succès";
+            System.out.println("Voiture creer avec succès");
         }
         else{
-            success = "Suppresion impossible!! Erreur!";
+            System.out.println("Creation impossible!! Erreur!");
         }
-        return success;
+        return voiture_enregistrer;
     }
-    //Pour voir par son numero de serie
+    //n oublier pas de mettre dans headers dans postman le Content-type et value = application/json
+    // et dans body la valeur de chaque ligne(ligne pour les donnees pour creer la classe car) en json bien sur
+    //{
+    //    "plateNumber" : "A16X22E",
+    //        "brand" : "ferrari",
+    //        "price" : 14000
+    //}
+    //supprimer une voiture a l aide d un fichier json
+    @DeleteMapping(value = "/voitures/supprimer")
+    @ResponseBody
+    public  void  Car_Delete(@RequestBody Car car_created) {
+        if(carrepo != null){
+            carrepo.deleteById(car_created.getPlateNumber());
+            System.out.println("Voiture supprimer avec succès");
+        }
+        else{
+            System.out.println("Suppresion impossible!! Erreur!");
+        }
+    }
+    //Pour créer une voiture avec juste les liens
+    //n oublier pas de préciser sur Postman que le lien URI ici est en POST
+    @PostMapping("/voitures/creer/{num_serie}/{marque}/{prix}")
+    @ResponseBody
+    public  Car Car_Create_or_Save(@PathVariable(value = "num_serie") String p_plateNumber,
+                                   @PathVariable(value = "marque") String p_brand, @PathVariable(value = "prix") int p_price) {
+        Car voiture_enregistrer = carrepo.save(new Car(p_plateNumber,p_brand,p_price));
+        return voiture_enregistrer;
+    }
+
+    //Pour voir par son numero de serie âr requete http GET
     @GetMapping("/voitures/{plateNumber}")
     @ResponseBody
     public Optional<Car> Car_SeeById(@PathVariable(value = "plateNumber") String p_plateNumber) {
@@ -53,22 +86,19 @@ public class EssaiController {
         }
         return it;
     }
-    //Pour créer une voiture
-    //n oublier pas de préciser sur Postman que le lien URI ici est en POST
-    @PostMapping("/voitures/create/{num_serie}/{marque}/{prix}")
+    //Pour supprimer une voiture par son numero de serie grace à un adresse http DELETE
+    //n oublier pas de préciser sur Postman que le lien URI ici est en DELETE A12EDRD
+    @DeleteMapping("/voitures/{plateNumber}")
     @ResponseBody
-    public  Car Car_Create_or_Save(@PathVariable(value = "num_serie") String p_plateNumber,
-                             @PathVariable(value = "marque") String p_brand, @PathVariable(value = "prix") int p_price) {
-        Car voiture_enregistrer = carrepo.save(new Car(p_plateNumber,p_brand,p_price));
-        return voiture_enregistrer;
-    }
-    //@RequestBody String p_plateNumber
-
-    @PostMapping("/cars")
-    @ResponseBody
-    public  Car Car_Create_or_Saved(@RequestBody String p_plateNumber,
-                                    @RequestBody String p_brand, @RequestBody int p_price) {
-        Car voiture_enregistrer = carrepo.save(new Car(p_plateNumber,p_brand,p_price));
-        return voiture_enregistrer;
+    public String Car_deleteById(@PathVariable(value = "plateNumber") String p_plateNumber) {
+        String success;
+        if(carrepo != null){
+            carrepo.deleteById(p_plateNumber);
+            success = "Voiture supprimer avec succès";
+        }
+        else{
+            success = "Suppresion impossible!! Erreur!";
+        }
+        return success;
     }
 }
