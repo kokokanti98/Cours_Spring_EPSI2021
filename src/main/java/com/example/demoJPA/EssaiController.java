@@ -8,6 +8,7 @@ import java.util.Optional;
 
 @RestController
 public class EssaiController {
+    //retoureve moi CardRepository et donne moi accès
     @Autowired
     private CarRepository carrepo;
 
@@ -23,6 +24,20 @@ public class EssaiController {
         it.forEach(e -> cars.add(e));
 
         return cars;
+    }
+    //@RequestHeader("my-number")
+    //@RequestParam String p_plateNumber
+    @GetMapping(value = "/voiture")
+    @ResponseBody
+    public Optional<Car> Car_SeeByIds(@RequestParam String plateNumber) {
+        var it = carrepo.findById(plateNumber);
+        if(it == null){
+            System.out.println("La voiture n'existe pas donc la valeur trouvé est null");
+        }
+        else{
+            System.out.println("La voiture existe et trouvé dans le navigateur web!");
+        }
+        return it;
     }
     //n oublier pas de mettre dans headers dans postman le Content-type et value = application/json
     // et dans body la valeur de chaque ligne(ligne pour les donnees pour creer la classe car) en json bien sur
