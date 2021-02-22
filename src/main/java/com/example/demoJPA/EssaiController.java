@@ -1,10 +1,7 @@
 package com.example.demoJPA;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +15,7 @@ public class EssaiController {
     //Regarder tous les voitures au lancement de l'application la bdd est vide alors tout d'abord créer une bdd à l aide
     //de http://localhost:8088/voitures/create/1122AB/feri/2400 par exemple avant de lancer http://localhost:8088/voitures
     @GetMapping("/voitures")
+    @ResponseBody
     public List<Car> findAll() {
 
         var it = carrepo.findAll();
@@ -28,7 +26,9 @@ public class EssaiController {
         return cars;
     }
     //Pour supprimer par son numero de serie
-    @GetMapping("/voitures/delete/{plateNumber}")
+    //n oublier pas de préciser sur Postman que le lien URI ici est en DELETE A12EDRD
+    @DeleteMapping("/voitures/delete/{plateNumber}")
+    @ResponseBody
     public String Car_deleteById(@PathVariable(value = "plateNumber") String p_plateNumber) {
         String success;
         if(carrepo != null){
@@ -42,6 +42,7 @@ public class EssaiController {
     }
     //Pour voir par son numero de serie
     @GetMapping("/voitures/{plateNumber}")
+    @ResponseBody
     public Optional<Car> Car_SeeById(@PathVariable(value = "plateNumber") String p_plateNumber) {
         var it = carrepo.findById(p_plateNumber);
         if(it!=null){
@@ -53,17 +54,12 @@ public class EssaiController {
         return it;
     }
     //Pour créer une voiture
-    @GetMapping("/voitures/create/{num_serie}/{marque}/{prix}")
-    public String Car_Create_or_Save(@PathVariable(value = "num_serie") String p_plateNumber,
+    //n oublier pas de préciser sur Postman que le lien URI ici est en POST
+    @PostMapping("/voitures/create/{num_serie}/{marque}/{prix}")
+    @ResponseBody
+    public  Car Car_Create_or_Save(@PathVariable(value = "num_serie") String p_plateNumber,
                              @PathVariable(value = "marque") String p_brand, @PathVariable(value = "prix") int p_price) {
-        String success;
-        if(carrepo != null){
-            carrepo.save(new Car(p_plateNumber,p_brand,p_price));
-            success = "Voiture Créer or modifier avec succès";
-        }
-        else{
-            success = "Création impossible!! Erreur!";
-        }
-        return success;
+        Car voiture_enregistrer = carrepo.save(new Car(p_plateNumber,p_brand,p_price));
+        return voiture_enregistrer;
     }
 }
