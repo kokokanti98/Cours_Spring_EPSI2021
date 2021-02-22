@@ -27,6 +27,7 @@ public class EssaiController {
     }
     //@RequestHeader("my-number")
     //@RequestParam String p_plateNumber
+    //Appel HTTP GET via param
     @GetMapping(value = "/voiture")
     @ResponseBody
     public Optional<Car> Car_SeeByIds(@RequestParam String plateNumber) {
