@@ -25,6 +25,17 @@ public class EssaiController {
 
         return cars;
     }
+    @GetMapping("/voitures")
+    @ResponseBody
+    public List<Car> findByPlateNumberOrderByPriceDesc(@RequestParam String plateNumber) {
+
+        var it = carrepo.findByPlateNumberOrderByPriceDesc(plateNumber);
+
+        var cars = new ArrayList<Car>();
+        it.forEach(e -> cars.add(e));
+
+        return cars;
+    }
     //@RequestHeader("my-number")
     //@RequestParam String p_plateNumber
     //Appel HTTP GET via param

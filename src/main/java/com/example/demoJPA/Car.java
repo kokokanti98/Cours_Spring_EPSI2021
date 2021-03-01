@@ -1,11 +1,18 @@
 package com.example.demoJPA;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
+
 @Entity
+//@Table(name="Car")
 public class Car {
+    //@Column(name="plateNumber")
     private String plateNumber;
+    //@Column(name="brand")
     private String brand;
+    //@Column(name="price")
     private int price;
 
     public Car(String p_platenumber,String brand,int price) {
