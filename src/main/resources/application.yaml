@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: front-web-service
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+  healthcheck:
+    enabled: true
+
+server:
+  port: 8762
