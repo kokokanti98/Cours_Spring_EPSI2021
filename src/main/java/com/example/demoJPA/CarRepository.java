@@ -18,7 +18,6 @@ public interface CarRepository extends CrudRepository<Car, String> {
 
     List<Car> findByOrderByPlateNumberAsc();
 
-    //void EssaiController();
     @Query("SELECT c FROM Car c WHERE c.brand=:brand and c.price=:price")
     List<Car> fetchCarByBrandAndPrice(@Param("brand") String brand, @Param("price") int price);
 
