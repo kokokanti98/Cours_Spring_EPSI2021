@@ -17,24 +17,80 @@ public class EssaiController {
     @GetMapping("/voitures")
     @ResponseBody
     public List<Car> findAll() {
-
+        Car car1 = new Car("1123AA","ferrari",10000);
+        Car car2 = new Car("1123AB","ferrari",20000);
+        Car car3 = new Car("1124AA","fiat",10300);
+        Car car4 = new Car("1124AB","fiat",20400);
+        Car voiture_reg1 = carrepo.save(car1);
+        Car voiture_reg2 = carrepo.save(car2);
+        Car voiture_reg3 = carrepo.save(car3);
+        Car voiture_reg4 = carrepo.save(car4);
         var it = carrepo.findAll();
+        var cars = new ArrayList<Car>();
+        it.forEach(e -> cars.add(e));
+        return cars;
+    }
+    //Pour voir les voitures avec prix descendant grace au order by DESC
+    @GetMapping("/voitures/BrandOrderByPriceDESC")
+    @ResponseBody
+    public List<Car> findByBrandOrderByPriceDesc(@RequestParam String brand) {
+
+        var it = carrepo.findByBrandOrderByPriceDesc(brand);
 
         var cars = new ArrayList<Car>();
         it.forEach(e -> cars.add(e));
 
         return cars;
     }
-    @GetMapping("/voitures")
+    //Pour voir les voitures avec sa marque et son prix dont ici on utilise le code requete(Select) avec les parametres
+    @GetMapping("/voitures/fetchCarByBrandAndPrice")
     @ResponseBody
-    public List<Car> findByPlateNumberOrderByPriceDesc(@RequestParam String plateNumber) {
+    public List<Car> fetchCarByBrandAndPrice(@RequestParam String brand, @RequestParam int price) {
 
-        var it = carrepo.findByPlateNumberOrderByPriceDesc(plateNumber);
+        var it = carrepo.fetchCarByBrandAndPrice(brand,price);
 
         var cars = new ArrayList<Car>();
         it.forEach(e -> cars.add(e));
 
         return cars;
+    }
+    //Pour voir les voitures par sa marque avec la commande Distinct en langage de bdd
+    @GetMapping("/voitures/findDistinctByBrand")
+    @ResponseBody
+    public List<Car> findDistinctByBrand(@RequestParam String brand) {
+
+        var it = carrepo.findDistinctByBrand(brand);
+
+        var cars = new ArrayList<Car>();
+        it.forEach(e -> cars.add(e));
+
+        return cars;
+    }
+    //Pour voir les voitures tout en les classant par ordre ASC ou ascending(plus petit au plus grand) de sa marque
+    @GetMapping("/voitures/findByOrderByPlateNumberAsc")
+    @ResponseBody
+    public List<Car> findByOrderByPlateNumberAsc() {
+
+        var it = carrepo.findByOrderByPlateNumberAsc();
+
+        var cars = new ArrayList<Car>();
+        it.forEach(e -> cars.add(e));
+
+        return cars;
+    }
+    //Pour voir les voitures par sa marque et sa plaque d immatriculation
+    @GetMapping("/voitures/findByBrandAndPlateNumber")
+    @ResponseBody
+    public Optional<Car> findByBrandAndPlateNumber(@RequestParam String brand, @RequestParam String plateNumber) {
+
+        var it = carrepo.findByBrandAndPlateNumber(brand,plateNumber);
+        if(it == null){
+            System.out.println("La voiture n'existe pas donc la valeur trouvé est null");
+        }
+        else{
+            System.out.println("La voiture existe et trouvé dans le navigateur web!");
+        }
+        return it;
     }
     //@RequestHeader("my-number")
     //@RequestParam String p_plateNumber

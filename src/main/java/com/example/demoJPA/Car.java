@@ -1,18 +1,20 @@
 package com.example.demoJPA;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 //@Table(name="Car")
 public class Car {
     //@Column(name="plateNumber")
+    @Column(nullable = false)
     private String plateNumber;
     //@Column(name="brand")
+    @Basic(optional = false)
+    @Column(nullable = false)
     private String brand;
     //@Column(name="price")
+    @Basic(optional = false)
+    @Column(nullable = false)
     private int price;
 
     public Car(String p_platenumber,String brand,int price) {
